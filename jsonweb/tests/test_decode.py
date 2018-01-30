@@ -355,4 +355,16 @@ class TestJsonWebObjectDecoder(unittest.TestCase):
                     
             self.assertEqual(decode._as_type_context.top, Person)
 
-        self.assertEqual(decode._as_type_context.top, None)        
+        self.assertEqual(decode._as_type_context.top, None)
+
+    def test_decode_with_py3_type_annotation(self):
+        @decode.from_object()
+        class Person:
+            def __init__(self, name: str):
+                self.name = name
+
+        json_str = '{"__type__": "Person", "name": "shawn"}'
+        person = loader(json_str)
+
+        self.assertTrue(isinstance(person, Person))
+        self.assertEqual(person.name, "shawn")

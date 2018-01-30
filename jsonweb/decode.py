@@ -231,7 +231,7 @@ class ObjectHook(object):
         
 
 def get_arg_spec(func):
-    arg_spec = inspect.getargspec(func)
+    arg_spec = inspect.getfullargspec(func)
     args = arg_spec.args
     
     try:   
